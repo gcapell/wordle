@@ -7,6 +7,7 @@ fn main() {
     let guesses = words(include_str!("wordlist_guesses.txt"));
     let solutions = words(include_str!("wordlist_solutions.txt"));
     cheat(&guesses, solutions);
+    //println!("{}", best_guess(&solutions, &guesses));
 }
 
 fn words(s: &str) -> Vec<Word> {
@@ -17,7 +18,8 @@ fn cheat(guesses: &[Word], mut solutions: Vec<Word>) {
     let mut guess = "arise".to_string();
 
     loop {
-        println!("# {} to refine {} solutions", guess, solutions.len());
+        println!("# {} to refine {}", guess, summarise_words(&solutions));
+
         print!("> ");
         std::io::stdout().flush().unwrap();
         let mut buf = String::new();
@@ -39,6 +41,18 @@ fn cheat(guesses: &[Word], mut solutions: Vec<Word>) {
         );
     }
     println!("only solution remaining is {}", solutions[0]);
+}
+
+fn summarise_words(words: &[Word]) -> String {
+    if words.len() > 10 {
+        format!("{} words", words.len())
+    } else {
+        words
+            .iter()
+            .map(|w| format!("{}", w))
+            .collect::<Vec<String>>()
+            .join(",")
+    }
 }
 
 // Return the guess which minimises the maximum number of possible solutions
