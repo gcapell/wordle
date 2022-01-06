@@ -122,14 +122,14 @@ fn cheat(guesses: &[Word], mut solutions: Vec<Word>) {
         std::io::stdin().read_line(&mut buf).unwrap();
         let score = Score::from_str(buf, guess.as_bytes()).unwrap();
         solutions = solutions.into_iter().filter(|w| score.matches(w)).collect();
-				match solutions.len() {
-					0 => unreachable!(),
-					1 => {
-						println!("only solution remaining is {}", solutions[0]);
-						break;
-					}
-					_ => ()
-				}
+        match solutions.len() {
+            0 => unreachable!(),
+            1 => {
+                println!("only solution remaining is {}", solutions[0]);
+                break;
+            }
+            _ => (),
+        }
         guess = best_guess(
             &solutions,
             if solutions.len() > 3 {
